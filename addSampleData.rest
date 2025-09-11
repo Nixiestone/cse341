@@ -1,0 +1,10 @@
+POST http://localhost:3000/contacts
+Content-Type: application/json
+
+{
+  "firstName": "Blessing",
+  "lastName": "Omoregie",
+  "email": "bomoregie@byupathway.edu",
+  "favoriteColor": "Blue",
+  "birthday": "2000-05-15"
+}
