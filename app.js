@@ -1,9 +1,14 @@
 const express = require('express');
-const dotenv = require('dotenv');
-const connectDB = require('./config/database');
 
-// Load environment variables
-dotenv.config();
+// ONLY load .env in development, NOT in production
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+  console.log('Development mode: Loading .env file');
+} else {
+  console.log('Production mode: Using Render environment variables');
+}
+
+const connectDB = require('./config/database');
 
 // Connect to database
 connectDB();
