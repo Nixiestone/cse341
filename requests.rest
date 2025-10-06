@@ -1,4 +1,4 @@
-@baseUrl = http://localhost:3000
+@baseUrl = https://contacts-api-kxh6.onrender.com/
 
 ### Get all contacts
 GET {{baseUrl}}/contacts
