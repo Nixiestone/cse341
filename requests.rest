@@ -1,7 +1,7 @@
 @baseUrl = https://contacts-api-kxh6.onrender.com/
 
 ### Get all contacts
-GET {{baseUrl}}/contacts
+GET https://contacts-api-kxh6.onrender.com/contacts
 
 ### Get single contact
-GET {{baseUrl}}/contacts/64f1a2e85c2d4e3d5c8b9a7f
+GET https://contacts-api-kxh6.onrender.com/contacts/68e3b7be19852c99c322b97d
