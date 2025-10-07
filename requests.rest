@@ -5,3 +5,30 @@ GET https://contacts-api-kxh6.onrender.com/contacts
 
 ### Get single contact
 GET https://contacts-api-kxh6.onrender.com/contacts/68e3b7be19852c99c322b97d
+
+### 🆕 Create new contact
+POST {{baseUrl}}/contacts
+Content-Type: application/json
+
+{
+  "firstName": "Beauty",
+  "lastName": "Austin",
+  "email": "beauty.austin@gmail.com",
+  "favoriteColor": "Yellow",
+  "birthday": "1998-07-14"
+}
+
+### 🆕 Update contact
+PUT {{baseUrl}}/contacts/68e3b7be19852c99c322b97d
+
+Content-Type: application/json
+
+{
+  "favoriteColor": "Purple"
+}
+
+### 🆕 Delete contact
+DELETE {{baseUrl}}/contacts/64f1a2e85c2d4e3d5c8b9a7f
+
+### 🆕 Swagger Documentation
+GET {{baseUrl}}/api-docs

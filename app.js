@@ -1,4 +1,5 @@
 const express = require('express');
+const { swaggerUi, specs } = require('./config/swagger');
 
 // ONLY load .env in development, NOT in production
 if (process.env.NODE_ENV !== 'production') {
@@ -14,6 +15,9 @@ const connectDB = require('./config/database');
 connectDB();
 
 const app = express();
+
+// Swagger Documentation Route
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 // Make our app understand JSON
 app.use(express.json());
