@@ -1,5 +1,13 @@
 @baseUrl = https://contacts-api-kxh6.onrender.com/
 
+### Test basic routes
+GET {{baseUrl}}/
+GET {{baseUrl}}/health
+GET {{baseUrl}}/api-docs
+
+### Contacts CRUD operations
+GET {{baseUrl}}/contacts
+
 ### Get all contacts
 GET https://contacts-api-kxh6.onrender.com/contacts
 
@@ -24,7 +32,8 @@ PUT {{baseUrl}}/contacts/68e3b7be19852c99c322b97d
 Content-Type: application/json
 
 {
-  "favoriteColor": "Purple"
+  "favoriteColor": "Purple",
+  "firstName": "BB Baby"
 }
 
 ### 🆕 Delete contact

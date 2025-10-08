@@ -1,3 +1,13 @@
+const express = require('express');
+const router = express.Router();
+const {
+  getContacts,
+  getContact,
+  createContact,
+  updateContact,
+  deleteContact
+} = require('../controllers/contactsController');
+
 /**
  * @swagger
  * components:
@@ -11,73 +21,119 @@
  *         - favoriteColor
  *         - birthday
  *       properties:
- *         _id:
- *           type: string
- *           description: The auto-generated id of the contact
  *         firstName:
  *           type: string
- *           description: The first name of the contact
  *         lastName:
  *           type: string
- *           description: The last name of the contact
  *         email:
  *           type: string
- *           description: The email of the contact
  *         favoriteColor:
  *           type: string
- *           description: The favorite color of the contact
  *         birthday:
  *           type: string
  *           format: date
- *           description: The birthday of the contact
  *       example:
- *         _id: 64f1a2e85c2d4e3d5c8b9a7f
- *         firstName: Blessing
- *         lastName: Omoregie
- *         email: blessingomoregie52@gmail.com
- *         favoriteColor: Lilac
- *         birthday: 2003-01-20
- */
-
-/**
- * @swagger
- * tags:
- *   name: Contacts
- *   description: The contacts managing API
+ *         firstName: "John"
+ *         lastName: "Doe"
+ *         email: "john@example.com"
+ *         favoriteColor: "Blue"
+ *         birthday: "1990-01-01"
  */
 
 /**
  * @swagger
  * /contacts:
  *   get:
- *     summary: Returns the list of all contacts
+ *     summary: Get all contacts
  *     tags: [Contacts]
  *     responses:
  *       200:
- *         description: The list of contacts
+ *         description: List of all contacts
  */
+router.get('/', getContacts);
 
-// These are the paths to find our friends
-const express = require('express');
-const {
-  getContacts,
-  getContact,
-  createContact,
-  updateContact,
-  deleteContact
-} = require('../controllers/contactsController');
+/**
+ * @swagger
+ * /contacts:
+ *   post:
+ *     summary: Create a new contact
+ *     tags: [Contacts]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Contact'
+ *     responses:
+ *       201:
+ *         description: Contact created successfully
+ */
+router.post('/', createContact);
 
-const router = express.Router();
+/**
+ * @swagger
+ * /contacts/{id}:
+ *   get:
+ *     summary: Get a contact by ID
+ *     tags: [Contacts]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Contact data
+ *       404:
+ *         description: Contact not found
+ */
+router.get('/:id', getContact);
 
-// Path to get ALL friends
-router.route('/')
-  .get(getContacts)
-  .post(createContact);  
+/**
+ * @swagger
+ * /contacts/{id}:
+ *   put:
+ *     summary: Update a contact
+ *     tags: [Contacts]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Contact'
+ *     responses:
+ *       200:
+ *         description: Contact updated successfully
+ *       404:
+ *         description: Contact not found
+ */
+router.put('/:id', updateContact);
 
-// Path to get ONE friend
-router.route('/:id')
-  .get(getContact)
-  .put(updateContact)
-  .delete(deleteContact); // Assuming deleteContact is defined in contactsController.js
+/**
+ * @swagger
+ * /contacts/{id}:
+ *   delete:
+ *     summary: Delete a contact
+ *     tags: [Contacts]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Contact deleted successfully
+ *       404:
+ *         description: Contact not found
+ */
+router.delete('/:id', deleteContact);
 
 module.exports = router;

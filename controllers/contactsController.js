@@ -1,7 +1,6 @@
-// These helpers will get friend information for us
-const Contact = require('../models/contact');
+const Contact = require('../models/Contact');
 
-// Get ALL friends
+// GET all contacts
 const getContacts = async (req, res) => {
   try {
     const contacts = await Contact.find();
@@ -18,7 +17,7 @@ const getContacts = async (req, res) => {
   }
 };
 
-// Get ONE friend
+// GET single contact
 const getContact = async (req, res) => {
   try {
     const contact = await Contact.findById(req.params.id);
@@ -35,6 +34,12 @@ const getContact = async (req, res) => {
       data: contact
     });
   } catch (error) {
+    if (error.name === 'CastError') {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid contact ID'
+      });
+    }
     res.status(500).json({
       success: false,
       error: 'Server Error'
@@ -42,7 +47,7 @@ const getContact = async (req, res) => {
   }
 };
 
-// 🆕 POST - Create new contact
+// POST - Create new contact
 const createContact = async (req, res) => {
   try {
     const contact = await Contact.create(req.body);
@@ -65,13 +70,17 @@ const createContact = async (req, res) => {
   }
 };
 
-// 🆕 PUT - Update contact
+// PUT - Update contact
 const updateContact = async (req, res) => {
   try {
-    const contact = await Contact.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true
-    });
+    const contact = await Contact.findByIdAndUpdate(
+      req.params.id, 
+      req.body, 
+      {
+        new: true,
+        runValidators: true
+      }
+    );
 
     if (!contact) {
       return res.status(404).json({
@@ -85,6 +94,13 @@ const updateContact = async (req, res) => {
       data: contact
     });
   } catch (error) {
+    if (error.name === 'ValidationError') {
+      const messages = Object.values(error.errors).map(val => val.message);
+      return res.status(400).json({
+        success: false,
+        error: messages
+      });
+    }
     res.status(500).json({
       success: false,
       error: 'Server Error'
@@ -92,7 +108,7 @@ const updateContact = async (req, res) => {
   }
 };
 
-// 🆕 DELETE - Delete contact
+// DELETE - Delete contact
 const deleteContact = async (req, res) => {
   try {
     const contact = await Contact.findByIdAndDelete(req.params.id);
@@ -118,5 +134,8 @@ const deleteContact = async (req, res) => {
 
 module.exports = {
   getContacts,
-  getContact
+  getContact,
+  createContact,
+  updateContact,
+  deleteContact
 };
