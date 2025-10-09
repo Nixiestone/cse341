@@ -1,12 +1,6 @@
+// LOCALHOST ### Get all users GET http://localhost:3000/users
+
 @baseUrl = https://contacts-api-kxh6.onrender.com/
-
-### Test basic routes
-GET {{baseUrl}}/
-GET {{baseUrl}}/health
-GET {{baseUrl}}/api-docs
-
-### Contacts CRUD operations
-GET {{baseUrl}}/contacts
 
 ### Get all contacts
 GET https://contacts-api-kxh6.onrender.com/contacts
@@ -37,7 +31,7 @@ Content-Type: application/json
 }
 
 ### 🆕 Delete contact
-DELETE {{baseUrl}}/contacts/64f1a2e85c2d4e3d5c8b9a7f
+DELETE {{baseUrl}}/contacts/68e3b9cf19852c99c322b97e
 
-### 🆕 Swagger Documentation
-GET {{baseUrl}}/api-docs
+### LOCALHOST ### Add sample data
+ GET http://localhost:3000/users

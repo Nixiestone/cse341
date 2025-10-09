@@ -1,24 +1,33 @@
 {
-  "name": "contacts-api",
+  "name": "cse-341-project-1",
   "version": "1.0.0",
-  "description": "API for managing contacts",
-  "main": "app.js",
+  "description": "My Frist Project",
+  "main": "server.js",
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
-  "keywords": [],
-  "author": "Blessing Omoregie",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/El-Benson/cse-341-project-1.git"
+  },
+  "author": "Michael Benson",
   "license": "ISC",
-  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/El-Benson/cse-341-project-1/issues"
+  },
+  "homepage": "https://github.com/El-Benson/cse-341-project-1#readme",
   "dependencies": {
-    "dotenv": "^16.6.1",
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
     "express": "^4.21.2",
-    "mongoose": "^7.8.7",
+    "joi": "^17.13.3",
+    "mongodb": "^6.15.0",
+    "mongoose": "^8.13.1",
+    "swagger-autogen": "^2.23.7",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
   },
-  "devDependencies": {
-    "nodemon": "^3.0.1"
-  }
+  "keywords": []
 }

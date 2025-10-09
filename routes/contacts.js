@@ -1,139 +1,59 @@
-const express = require('express');
+const express = require("express");
+const Contact = require("../models/contact");
 const router = express.Router();
-const {
-  getContacts,
-  getContact,
-  createContact,
-  updateContact,
-  deleteContact
-} = require('../controllers/contactsController');
 
-/**
- * @swagger
- * components:
- *   schemas:
- *     Contact:
- *       type: object
- *       required:
- *         - firstName
- *         - lastName
- *         - email
- *         - favoriteColor
- *         - birthday
- *       properties:
- *         firstName:
- *           type: string
- *         lastName:
- *           type: string
- *         email:
- *           type: string
- *         favoriteColor:
- *           type: string
- *         birthday:
- *           type: string
- *           format: date
- *       example:
- *         firstName: "John"
- *         lastName: "Doe"
- *         email: "john@example.com"
- *         favoriteColor: "Blue"
- *         birthday: "1990-01-01"
- */
+// GET all contacts
+router.get("/", async (req, res) => {
+  try {
+    const contacts = await Contact.find();
+    res.json(contacts);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
-/**
- * @swagger
- * /contacts:
- *   get:
- *     summary: Get all contacts
- *     tags: [Contacts]
- *     responses:
- *       200:
- *         description: List of all contacts
- */
-router.get('/', getContacts);
+// GET a single contact by ID
+router.get("/:id", async (req, res) => {
+  try {
+    const contact = await Contact.findById(req.params.id);
+    if (!contact) return res.status(404).json({ message: "Contact not found" });
+    res.json(contact);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
-/**
- * @swagger
- * /contacts:
- *   post:
- *     summary: Create a new contact
- *     tags: [Contacts]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/Contact'
- *     responses:
- *       201:
- *         description: Contact created successfully
- */
-router.post('/', createContact);
+// POST a new contact
+router.post("/", async (req, res) => {
+  try {
+    const newContact = new Contact(req.body);
+    const savedContact = await newContact.save();
+    res.status(201).json(savedContact);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
 
-/**
- * @swagger
- * /contacts/{id}:
- *   get:
- *     summary: Get a contact by ID
- *     tags: [Contacts]
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *     responses:
- *       200:
- *         description: Contact data
- *       404:
- *         description: Contact not found
- */
-router.get('/:id', getContact);
+// PUT (Update contact)
+router.put("/:id", async (req, res) => {
+  try {
+    const updatedContact = await Contact.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (!updatedContact) return res.status(404).json({ message: "Contact not found" });
+    res.json(updatedContact);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
 
-/**
- * @swagger
- * /contacts/{id}:
- *   put:
- *     summary: Update a contact
- *     tags: [Contacts]
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/Contact'
- *     responses:
- *       200:
- *         description: Contact updated successfully
- *       404:
- *         description: Contact not found
- */
-router.put('/:id', updateContact);
-
-/**
- * @swagger
- * /contacts/{id}:
- *   delete:
- *     summary: Delete a contact
- *     tags: [Contacts]
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *     responses:
- *       200:
- *         description: Contact deleted successfully
- *       404:
- *         description: Contact not found
- */
-router.delete('/:id', deleteContact);
+// DELETE a contact
+router.delete("/:id", async (req, res) => {
+  try {
+    const deletedContact = await Contact.findByIdAndDelete(req.params.id);
+    if (!deletedContact) return res.status(404).json({ message: "Contact not found" });
+    res.json({ message: "Contact deleted" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
 module.exports = router;
